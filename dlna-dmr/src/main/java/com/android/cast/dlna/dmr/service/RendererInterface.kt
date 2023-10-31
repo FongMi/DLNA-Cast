@@ -15,7 +15,6 @@ import org.fourthline.cling.support.model.TransportInfo
 import org.fourthline.cling.support.model.TransportSettings
 import java.net.URI
 
-const val actionSetAvTransport = "com.dlna.action.SetAvTransport"
 const val keyExtraCastAction = "extra.castAction"
 
 interface RendererControl
@@ -52,7 +51,7 @@ interface AvTransportControl : RendererControl {
     }
 
     private fun startCastActivity(content: CastAction.() -> Unit) {
-        applicationContext.startActivity(Intent(actionSetAvTransport).apply {
+        applicationContext.startActivity(Intent(applicationContext.packageName + ".cast").apply {
             val castAction = CastAction()
             content(castAction)
             this.putExtra(keyExtraCastAction, castAction)
