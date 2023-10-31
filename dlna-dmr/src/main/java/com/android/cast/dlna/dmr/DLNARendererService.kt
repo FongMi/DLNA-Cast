@@ -100,7 +100,7 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
             DeviceIdentity(udn),
             UDADeviceType("MediaRenderer", 1),
             DeviceDetails(
-                "DMR (${Build.MODEL})",
+                "影視 (${Build.MODEL})",
                 ManufacturerDetails(Build.MANUFACTURER),
                 ModelDetails(Build.MODEL, "MPI MediaPlayer", "v1", baseUrl)
             ),
