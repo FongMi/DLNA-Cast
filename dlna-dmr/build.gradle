@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace 'com.android.cast.dlna.dmr'
-    compileSdk 34
+    compileSdk 32
     defaultConfig {
-        minSdk 16
-        targetSdk 34
+        minSdk 24
+        targetSdk 32
         consumerProguardFiles "consumer-rules.pro"
     }
     buildTypes {
@@ -27,7 +27,7 @@ android {
 dependencies {
     api(project(':dlna-core'))
 
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 repositories {
