@@ -1,15 +1,15 @@
 package com.android.cast.dlna.dmr
 
+import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import androidx.appcompat.app.AppCompatActivity
 import com.android.cast.dlna.dmr.service.keyExtraCastAction
 
-abstract class BaseRendererActivity : AppCompatActivity() {
+abstract class BaseRendererActivity : Activity() {
     protected var rendererService: DLNARendererService? = null
         private set
 
