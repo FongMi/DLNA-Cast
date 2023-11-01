@@ -1,5 +1,6 @@
 package com.android.cast.dlna.dmr
 
+import android.app.Notification
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -40,11 +41,15 @@ import java.util.UUID
 open class DLNARendererService : AndroidUpnpServiceImpl() {
     companion object {
         fun startService(context: Context) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                context.applicationContext.startForegroundService(Intent(context, DLNARendererService::class.java))
-//            } else {
-            context.applicationContext.startService(Intent(context, DLNARendererService::class.java))
-//            }
+            startService(context, 0)
+        }
+
+        fun startService(context: Context, icon: Int) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.applicationContext.startForegroundService(Intent(context, DLNARendererService::class.java).putExtra("icon", icon))
+            } else {
+                context.applicationContext.startService(Intent(context, DLNARendererService::class.java).putExtra("icon", icon))
+            }
         }
     }
 
@@ -74,7 +79,10 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
         }
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && intent != null) startForeground(9528, Notification.Builder(this, "default").setContentTitle("DLNA").setSmallIcon(intent.getIntExtra("icon", 0)).build())
+        return START_STICKY
+    }
 
     override fun onBind(intent: Intent): IBinder? = serviceBinder
 
@@ -96,17 +104,7 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
             UDN(UUID.randomUUID())
         }
         logger.i("create local device: [MediaRenderer][${udn.identifierString.split("-").last()}]($baseUrl)")
-        return LocalDevice(
-            DeviceIdentity(udn),
-            UDADeviceType("MediaRenderer", 1),
-            DeviceDetails(
-                "影視 (${Build.MODEL})",
-                ManufacturerDetails(Build.MANUFACTURER),
-                ModelDetails(Build.MODEL, "MPI MediaPlayer", "v1", baseUrl)
-            ),
-            emptyArray(),
-            generateLocalServices()
-        )
+        return LocalDevice(DeviceIdentity(udn), UDADeviceType("MediaRenderer", 1), DeviceDetails("影視 (${Build.MODEL})", ManufacturerDetails(Build.MANUFACTURER), ModelDetails(Build.MODEL, "MPI MediaPlayer", "v1", baseUrl)), emptyArray(), generateLocalServices())
     }
 
     @Suppress("UNCHECKED_CAST")
