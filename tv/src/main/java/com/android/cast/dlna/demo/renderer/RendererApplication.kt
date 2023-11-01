@@ -1,6 +1,8 @@
 package com.android.cast.dlna.demo.renderer
 
 import android.app.Application
+import androidx.core.app.NotificationChannelCompat
+import androidx.core.app.NotificationManagerCompat
 import java.util.logging.Level
 
 class RendererApplication : Application() {
@@ -12,5 +14,6 @@ class RendererApplication : Application() {
         com.android.cast.dlna.core.Logger.enabled = true
         com.android.cast.dlna.core.Logger.level = com.android.cast.dlna.core.Level.D
         com.android.cast.dlna.core.Logger.create("RendererApplication").i("Application onCreate.")
+        NotificationManagerCompat.from(this).createNotificationChannel(NotificationChannelCompat.Builder("default", NotificationManagerCompat.IMPORTANCE_MIN).setName("預設").build());
     }
 }
