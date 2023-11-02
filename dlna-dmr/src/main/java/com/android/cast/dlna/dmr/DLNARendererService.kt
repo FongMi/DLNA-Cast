@@ -40,11 +40,11 @@ import java.util.UUID
 
 open class DLNARendererService : AndroidUpnpServiceImpl() {
     companion object {
-        fun startService(context: Context) {
-            startService(context, 0)
+        fun start(context: Context) {
+            start(context, 0)
         }
 
-        fun startService(context: Context, icon: Int) {
+        fun start(context: Context, icon: Int) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.applicationContext.startForegroundService(Intent(context, DLNARendererService::class.java).putExtra("icon", icon))
             } else {

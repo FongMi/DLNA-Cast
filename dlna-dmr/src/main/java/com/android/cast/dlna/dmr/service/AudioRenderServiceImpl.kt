@@ -8,8 +8,7 @@ import org.fourthline.cling.support.renderingcontrol.AbstractAudioRenderingContr
 class AudioRenderServiceImpl(private val audioControl: AudioControl) : AbstractAudioRenderingControl() {
     override fun setMute(instanceId: UnsignedIntegerFourBytes, channelName: String, desiredMute: Boolean) = audioControl.setMute(channelName, desiredMute)
     override fun getMute(instanceId: UnsignedIntegerFourBytes, channelName: String): Boolean = audioControl.getMute(channelName)
-    override fun setVolume(instanceId: UnsignedIntegerFourBytes, channelName: String, desiredVolume: UnsignedIntegerTwoBytes) =
-        audioControl.setVolume(channelName, desiredVolume)
+    override fun setVolume(instanceId: UnsignedIntegerFourBytes, channelName: String, desiredVolume: UnsignedIntegerTwoBytes) = audioControl.setVolume(channelName, desiredVolume)
     override fun getVolume(instanceId: UnsignedIntegerFourBytes, channelName: String): UnsignedIntegerTwoBytes = audioControl.getVolume(channelName)
     override fun getCurrentChannels(): Array<Channel> = arrayOf(Channel.Master)
     override fun getCurrentInstanceIds(): Array<UnsignedIntegerFourBytes> = arrayOf(UnsignedIntegerFourBytes(0))

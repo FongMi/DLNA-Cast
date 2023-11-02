@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         PermissionX.init(this)
             .permissions(permission.READ_EXTERNAL_STORAGE, permission.ACCESS_COARSE_LOCATION, permission.ACCESS_FINE_LOCATION)
             .request { _: Boolean, _: List<String?>?, _: List<String?>? -> resetWifiInfo() }
-        DLNARendererService.startService(this)
+        DLNARendererService.start(this)
     }
 
     @SuppressLint("SetTextI18n")

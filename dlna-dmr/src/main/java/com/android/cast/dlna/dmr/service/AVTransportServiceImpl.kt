@@ -22,10 +22,8 @@ class AVTransportServiceImpl(private val avTransportControl: AvTransportControl)
     override fun play(instanceId: UnsignedIntegerFourBytes, speed: String?) = avTransportControl.play(speed)
     override fun previous(instanceId: UnsignedIntegerFourBytes) = avTransportControl.previous()
     override fun seek(instanceId: UnsignedIntegerFourBytes, unit: String?, target: String?) = avTransportControl.seek(unit, target)
-    override fun setAVTransportURI(instanceId: UnsignedIntegerFourBytes, currentURI: String, currentURIMetaData: String?) =
-        avTransportControl.setAVTransportURI(currentURI, currentURIMetaData)
-    override fun setNextAVTransportURI(instanceId: UnsignedIntegerFourBytes, nextURI: String, nextURIMetaData: String?) =
-        avTransportControl.setNextAVTransportURI(nextURI, nextURIMetaData)
+    override fun setAVTransportURI(instanceId: UnsignedIntegerFourBytes, currentURI: String, currentURIMetaData: String?) = avTransportControl.setAVTransportURI(currentURI, currentURIMetaData)
+    override fun setNextAVTransportURI(instanceId: UnsignedIntegerFourBytes, nextURI: String, nextURIMetaData: String?) = avTransportControl.setNextAVTransportURI(nextURI, nextURIMetaData)
     override fun setPlayMode(instanceId: UnsignedIntegerFourBytes, newPlayMode: String) = avTransportControl.setPlayMode(newPlayMode)
     override fun stop(instanceId: UnsignedIntegerFourBytes) = avTransportControl.stop()
     override fun record(instanceId: UnsignedIntegerFourBytes) {} // ignore
