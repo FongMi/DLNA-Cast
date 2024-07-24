@@ -1,7 +1,5 @@
 include ':app'
-include ':tv'
 include ':dlna-core'
 include ':dlna-dmc'
 include ':dlna-dms'
 include ':dlna-dmr'
-include ':server'

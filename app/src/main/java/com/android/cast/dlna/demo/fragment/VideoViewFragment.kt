@@ -220,26 +220,12 @@ class VideoViewFragment : Fragment(), OnKeyEventHandler {
                     Toast.makeText(context, "找不到文件路径...", Toast.LENGTH_SHORT).show()
                 } else {
                     logger.i("selected: $file")
-                    DLNACastManager.startLocalHttpServer()
-                    durationMillSeconds = 0L
-                    deviceControl.setAVTransportURI("${DLNACastManager.localServer?.baseUrl}${file.path}", file.nameWithoutExtension, object : ServiceActionCallback<Unit> {
-                        override fun onSuccess(result: Unit) {
-                            positionHandler.start()
-                        }
-
-                        override fun onFailure(msg: String) {
-                            activity?.also { context ->
-                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    })
                 }
             }
         }
     }
 
     override fun onDestroyView() {
-        DLNACastManager.stopLocalHttpServer()
         DLNACastManager.disconnectDevice(device)
         positionHandler.stop()
         super.onDestroyView()

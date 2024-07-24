@@ -104,7 +104,7 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
             UDN(UUID.randomUUID())
         }
         logger.i("create local device: [MediaRenderer][${udn.identifierString.split("-").last()}]($baseUrl)")
-        return LocalDevice(DeviceIdentity(udn), UDADeviceType("MediaRenderer", 1), DeviceDetails("影視 (${Build.MODEL})", ManufacturerDetails(Build.MANUFACTURER), ModelDetails(Build.MODEL, "MPI MediaPlayer", "v1", baseUrl)), emptyArray(), generateLocalServices())
+        return LocalDevice(DeviceIdentity(udn), UDADeviceType("MediaRenderer", 1), DeviceDetails("影視", ManufacturerDetails(Build.MANUFACTURER), ModelDetails(Build.MODEL, "MPI MediaPlayer", "v1", baseUrl)), emptyArray(), generateLocalServices())
     }
 
     @Suppress("UNCHECKED_CAST")

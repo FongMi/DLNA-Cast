@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
 import com.android.cast.dlna.core.Logger
-import com.android.cast.dlna.core.http.LocalServer
 import com.android.cast.dlna.dmc.control.CastControlImpl
 import com.android.cast.dlna.dmc.control.DeviceControl
 import com.android.cast.dlna.dmc.control.EmptyDeviceControl
@@ -126,25 +125,6 @@ object DLNACastManager : OnDeviceRegistryListener {
     }
 
     private fun checkDeviceType(device: Device<*, *, *>): Boolean = searchDeviceType == null || searchDeviceType == device.type
-
-    // -----------------------------------------------------------------------------------------
-    // ---- LocalServer
-    // -----------------------------------------------------------------------------------------
-    var localServer: LocalServer? = null
-        private set
-
-    fun startLocalHttpServer(port: Int = 8192, jetty: Boolean = true) {
-        if (localServer == null) {
-            applicationContext?.run {
-                localServer = LocalServer(this, port, jetty)
-            }
-        }
-        localServer?.startServer()
-    }
-
-    fun stopLocalHttpServer() {
-        localServer?.stopServer()
-    }
 
     // -----------------------------------------------------------------------------------------
     // ---- Action

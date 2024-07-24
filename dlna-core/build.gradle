@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace 'com.android.cast.dlna.core'
-    compileSdk 34
+    compileSdk 35
     defaultConfig {
         minSdk 16
-        targetSdk 34
+        targetSdk 35
         consumerProguardFiles "consumer-rules.pro"
     }
     buildTypes {
@@ -22,18 +22,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
     // Cling library required
-    api 'org.fourthline.cling:cling-core:2.1.1'
-    api 'org.fourthline.cling:cling-support:2.1.1'
-    // Jetty
-    api 'org.eclipse.jetty:jetty-client:8.1.21.v20160908'
-    api 'org.eclipse.jetty:jetty-server:8.1.21.v20160908'
-    api 'org.eclipse.jetty:jetty-servlet:8.1.21.v20160908'
-    // Nano http
-    api 'org.nanohttpd:nanohttpd:2.3.1'
+    api 'org.fourthline.cling:cling-core:2.1.2'
+    api 'org.fourthline.cling:cling-support:2.1.2'
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
