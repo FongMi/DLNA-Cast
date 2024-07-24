@@ -29,8 +29,12 @@ android {
 
 dependencies {
     // Cling library required
-    api 'org.fourthline.cling:cling-core:2.1.2'
-    api 'org.fourthline.cling:cling-support:2.1.2'
+    api 'org.fourthline.cling:cling-core:2.1.2-SNAPSHOT'
+    api 'org.fourthline.cling:cling-support:2.1.2-SNAPSHOT'
+    // Jetty
+    // api('org.eclipse.jetty:jetty-client:8.1.22.v20160922') { exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet' }
+    // api('org.eclipse.jetty:jetty-server:8.1.22.v20160922') { exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet' }
+    // api('org.eclipse.jetty:jetty-servlet:8.1.22.v20160922') { exclude group: 'org.eclipse.jetty.orbit', module: 'javax.servlet' }
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
