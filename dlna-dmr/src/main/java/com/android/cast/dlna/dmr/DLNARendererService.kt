@@ -104,7 +104,7 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
             UDN(UUID.randomUUID())
         }
         logger.i("create local device: [MediaRenderer][${udn.identifierString.split("-").last()}]($baseUrl)")
-        return LocalDevice(DeviceIdentity(udn), UDADeviceType("MediaRenderer", 1), DeviceDetails("影視", ManufacturerDetails(Build.MANUFACTURER), ModelDetails(Build.MODEL, "MPI MediaPlayer", "v1", baseUrl)), emptyArray(), generateLocalServices())
+        return LocalDevice(DeviceIdentity(udn), UDADeviceType("MediaRenderer", 1), DeviceDetails(getDeviceName(), ManufacturerDetails(Build.MANUFACTURER), ModelDetails(Build.MODEL, "MPI MediaPlayer", "v1", baseUrl)), emptyArray(), generateLocalServices())
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -127,11 +127,11 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
         return arrayOf(avTransportService, renderingControlService)
     }
 
-//    fun updateDevice() {
-//        localDevice?.run {
-//            upnpService.registry.addDevice(this)
-//        }
-//    }
+    fun getDeviceName(): String {
+        val model = Build.MODEL
+        val manufacturer = Build.MANUFACTURER
+        return if (model.startsWith(manufacturer)) model else "$manufacturer $model"
+    }
 
     fun bindRealPlayer(control: RenderControl?) {
         (avTransportControl as? AVTransportController)?.mediaControl = control
