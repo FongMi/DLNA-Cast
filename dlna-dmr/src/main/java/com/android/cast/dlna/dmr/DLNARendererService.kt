@@ -39,6 +39,7 @@ import java.io.IOException
 import java.util.UUID
 
 open class DLNARendererService : AndroidUpnpServiceImpl() {
+
     companion object {
         fun start(context: Context) {
             start(context, 0)
@@ -50,6 +51,10 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
             } else {
                 context.applicationContext.startService(Intent(context, DLNARendererService::class.java).putExtra("icon", icon))
             }
+        }
+
+        fun stop(context: Context) {
+            context.applicationContext.stopService(Intent(context, DLNARendererService::class.java))
         }
     }
 

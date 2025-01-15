@@ -5,7 +5,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
-        <service android:name="com.android.cast.dlna.dmr.DLNARendererService" />
+
+        <service
+            android:name="com.android.cast.dlna.dmr.DLNARendererService"
+            android:foregroundServiceType="remoteMessaging" />
+
     </application>
 
 </manifest>
