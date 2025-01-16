@@ -1,7 +1,5 @@
 package com.android.cast.dlna.dmr
 
-import android.app.Notification
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
@@ -40,24 +38,6 @@ import java.util.UUID
 
 open class DLNARendererService : AndroidUpnpServiceImpl() {
 
-    companion object {
-        fun start(context: Context) {
-            start(context, 0)
-        }
-
-        fun start(context: Context, icon: Int) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.applicationContext.startForegroundService(Intent(context, DLNARendererService::class.java).putExtra("icon", icon))
-            } else {
-                context.applicationContext.startService(Intent(context, DLNARendererService::class.java).putExtra("icon", icon))
-            }
-        }
-
-        fun stop(context: Context) {
-            context.applicationContext.stopService(Intent(context, DLNARendererService::class.java))
-        }
-    }
-
     private val logger = getLogger("RendererService")
     private val serviceBinder = RendererServiceBinderWrapper()
     private lateinit var avTransportControl: AvTransportControl
@@ -82,11 +62,6 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
             e.printStackTrace()
             stopSelf()
         }
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && intent != null) startForeground(9528, Notification.Builder(this, "default").setContentTitle("DLNA").setSmallIcon(intent.getIntExtra("icon", 0)).build())
-        return START_STICKY
     }
 
     override fun onBind(intent: Intent): IBinder? = serviceBinder
