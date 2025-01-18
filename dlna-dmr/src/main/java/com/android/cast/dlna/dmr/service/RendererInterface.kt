@@ -33,7 +33,6 @@ interface AvTransportControl : RendererControl {
         } catch (ex: Exception) {
             throw AVTransportException(INVALID_ARGS, "CurrentURI can not be null or malformed")
         }
-
         startCastActivity {
             this.currentURI = currentURI
             this.currentURIMetaData = currentURIMetaData
@@ -102,11 +101,9 @@ interface AudioControl : RendererControl {
     fun setMute(channelName: String, desiredMute: Boolean) {
         logger.i("setMute: $desiredMute")
     }
-
     fun getMute(channelName: String): Boolean
     fun setVolume(channelName: String, desiredVolume: UnsignedIntegerTwoBytes) {
         logger.i("setVolume: ${desiredVolume.value}")
     }
-
     fun getVolume(channelName: String): UnsignedIntegerTwoBytes
 }
