@@ -24,19 +24,4 @@ class MainActivity : AppCompatActivity() {
     private fun resetWifiInfo() {
         (findViewById<View>(R.id.network_info) as TextView).text = "${Utils.getWiFiName(this)} - ${Utils.getWiFiIpAddress(this)}"
     }
-
-//    private val connection = object : ServiceConnection {
-//        override fun onServiceConnected(name: ComponentName, binder: IBinder) {
-//            (binder as? RendererServiceBinder)?.service?.updateDevice()
-//        }
-//
-//        override fun onServiceDisconnected(name: ComponentName) {
-//        }
-//
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//        bindService(Intent(this, DLNARendererService::class.java), connection, Service.BIND_AUTO_CREATE)
-//    }
 }

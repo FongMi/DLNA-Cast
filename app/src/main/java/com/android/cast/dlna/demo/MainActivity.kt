@@ -69,10 +69,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_search) {
             Toast.makeText(this, "开始搜索...", Toast.LENGTH_SHORT).show()
-//            DLNACastManager.search(DLNACastManager.DEVICE_TYPE_MEDIA_RENDERER, 60)
             DLNACastManager.search()
         }
-
         return super.onOptionsItemSelected(item)
     }
 }

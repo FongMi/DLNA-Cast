@@ -11,7 +11,6 @@ class DLNACastService : AndroidUpnpServiceImpl() {
     private val logger = Logger.create("CastService")
     override fun onCreate() {
         logger.i("DLNACastService onCreate")
-//        LoggingUtil.resetRootHandler(FixedAndroidLogHandler())
         super.onCreate()
     }
 

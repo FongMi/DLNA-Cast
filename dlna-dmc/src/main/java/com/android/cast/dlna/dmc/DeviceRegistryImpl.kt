@@ -17,7 +17,6 @@ internal class DeviceRegistryImpl(private val deviceRegistryListener: OnDeviceRe
 
     override fun deviceAdded(registry: Registry, device: Device<*, *, *>) {
         logger.i("deviceAdded: " + parseDeviceInfo(device))
-        // logger.i(parseDeviceService(device))
         handler.post { deviceRegistryListener.onDeviceAdded(device) }
     }
 

@@ -43,7 +43,6 @@ interface AvTransportControl : RendererControl {
     fun setNextAVTransportURI(nextURI: String, nextURIMetaData: String?) {
         logger.i("setNextAVTransportURI: nextURI=$nextURI")
         nextURIMetaData?.let { logger.i("setNextAVTransportURI: nextURIMetaData=$it") }
-
         startCastActivity {
             this.nextURI = nextURI
             this.nextURIMetaData = nextURIMetaData
@@ -85,9 +84,6 @@ interface AvTransportControl : RendererControl {
 
     fun stop() {
         logger.i("stop")
-//        startCastActivity {
-//            this.stop = "stop"
-//        }
     }
 
     val currentTransportActions: Array<TransportAction>

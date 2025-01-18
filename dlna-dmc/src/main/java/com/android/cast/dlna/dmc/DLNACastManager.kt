@@ -118,7 +118,6 @@ object DLNACastManager : OnDeviceRegistryListener {
 
     override fun onDeviceRemoved(device: Device<*, *, *>) {
         // TODO:if this device is casting, disconnect first!
-        // disconnectDevice(device)
         if (checkDeviceType(device)) {
             registerDeviceListeners.forEach { listener -> listener.onDeviceRemoved(device) }
         }
