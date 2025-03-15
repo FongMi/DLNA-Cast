@@ -1,5 +1,6 @@
 package com.android.cast.dlna.dmr
 
+import android.app.Notification
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
@@ -64,7 +65,10 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
         }
     }
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && intent != null) startForeground(30678, Notification.Builder(this, "default").setContentTitle("DLNA").build())
+        return START_STICKY
+    }
 
     override fun onBind(intent: Intent): IBinder? = serviceBinder
 
