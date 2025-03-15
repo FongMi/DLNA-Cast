@@ -19,16 +19,17 @@ import android.Manifest.permission
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
-import android.net.ConnectivityManager
 import android.net.Uri
-import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore.MediaColumns
 import android.provider.MediaStore.Video
+import android.text.format.Formatter
 import java.io.File
+import java.net.Inet4Address
+import java.net.NetworkInterface
 
 object Utils {
     // ------------------------------------------------------------------------------------------------------------------------
@@ -39,24 +40,21 @@ object Utils {
     private const val WIFI_NO_CONNECT = "<not connect>"
     private const val PERMISSION_DENIED = "<permission denied>"
 
-    fun getWiFiIpAddress(context: Context): String {
-        var ipAddress = 0
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-            ipAddress = wifiManager.connectionInfo.ipAddress
-        } else {
-            val connectivityManager = context.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            connectivityManager.run {
-                activeNetwork?.let { network ->
-                    (getNetworkCapabilities(network)?.transportInfo as? WifiInfo)?.let { wifiInfo ->
-                        ipAddress = wifiInfo.ipAddress
-                    }
-                }
-            }
-        }
-        if (ipAddress == 0) return ""
-        return (ipAddress and 0xFF).toString() + "." + (ipAddress shr 8 and 0xFF) + "." + (ipAddress shr 16 and 0xFF) + "." + (ipAddress shr 24 and 0xFF)
+    fun getIpAddress(context: Context): String {
+        val manager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
+        return manager?.connectionInfo?.ipAddress
+            ?.takeIf { it != 0 }
+            ?.let { Formatter.formatIpAddress(it) }
+            ?: getHostAddress()
     }
+
+    private fun getHostAddress(): String =
+        NetworkInterface.getNetworkInterfaces().toList()
+            .asSequence()
+            .flatMap { it.inetAddresses.toList().asSequence() }
+            .filterIsInstance<Inet4Address>()
+            .firstOrNull { !it.isLoopbackAddress }
+            ?.hostAddress.orEmpty()
 
     /**
      * need permission 'Manifest.permission.ACCESS_FINE_LOCATION' and 'Manifest.permission.ACCESS_WIFI_STATE' if system sdk >= Android O.
@@ -87,7 +85,7 @@ object Utils {
         }
     }
 
-    fun getHttpBaseUrl(context: Context, port: Int = 9091) = "http://${getWiFiIpAddress(context)}:$port/"
+    fun getHttpBaseUrl(context: Context, port: Int = 9091) = "http://${getIpAddress(context)}:$port/"
 
     // ------------------------------------------------------------------------------------------------------------------------
     // ---- Others

@@ -8,7 +8,7 @@ android {
     namespace 'com.android.cast.dlna.core'
     compileSdk 35
     defaultConfig {
-        minSdk 16
+        minSdk 21
         targetSdk 35
         consumerProguardFiles "consumer-rules.pro"
     }
