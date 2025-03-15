@@ -64,6 +64,8 @@ open class DLNARendererService : AndroidUpnpServiceImpl() {
         }
     }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int = START_STICKY
+
     override fun onBind(intent: Intent): IBinder? = serviceBinder
 
     override fun onDestroy() {

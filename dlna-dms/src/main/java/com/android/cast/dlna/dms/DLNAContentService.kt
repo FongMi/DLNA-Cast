@@ -1,6 +1,5 @@
 package com.android.cast.dlna.dms
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
@@ -22,15 +21,6 @@ import org.fourthline.cling.support.contentdirectory.AbstractContentDirectorySer
 import java.util.*
 
 open class DLNAContentService : AndroidUpnpServiceImpl() {
-    companion object {
-        fun startService(context: Context) {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                context.applicationContext.startForegroundService(Intent(context, DLNAContentService::class.java))
-//            } else {
-            context.applicationContext.startService(Intent(context, DLNAContentService::class.java))
-//            }
-        }
-    }
 
     protected inner class RendererServiceBinderWrapper : AndroidUpnpServiceImpl.Binder(), ContentServiceBinder {
         override val service: DLNAContentService
