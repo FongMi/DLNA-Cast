@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     private fun resetToolbar() {
         supportActionBar?.title = "DLNA Cast"
-        supportActionBar?.subtitle = "${Utils.getWiFiName(this)} - ${Utils.getIpAddress(this)}"
+        supportActionBar?.subtitle = "${Utils.getWiFiName(this)} - ${Utils.getIp(this)}"
     }
 
     override fun onStart() {

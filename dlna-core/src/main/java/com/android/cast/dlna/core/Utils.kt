@@ -26,7 +26,6 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore.MediaColumns
 import android.provider.MediaStore.Video
-import android.text.format.Formatter
 import java.io.File
 import java.net.Inet4Address
 import java.net.NetworkInterface
@@ -40,21 +39,28 @@ object Utils {
     private const val WIFI_NO_CONNECT = "<not connect>"
     private const val PERMISSION_DENIED = "<permission denied>"
 
-    fun getIpAddress(context: Context): String {
-        val manager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
-        return manager?.connectionInfo?.ipAddress
-            ?.takeIf { it != 0 }
-            ?.let { Formatter.formatIpAddress(it) }
-            ?: getHostAddress()
+    fun getIp(context: Context): String {
+        getHostAddress("wlan").takeIf { it.isNotEmpty() }?.let { return it }
+        getHostAddress("eth").takeIf { it.isNotEmpty() }?.let { return it }
+        getWifiAddress(context).takeIf { it.isNotEmpty() }?.let { return it }
+        return getHostAddress("")
     }
 
-    private fun getHostAddress(): String =
-        NetworkInterface.getNetworkInterfaces().toList()
-            .asSequence()
-            .flatMap { it.inetAddresses.toList().asSequence() }
-            .filterIsInstance<Inet4Address>()
-            .firstOrNull { !it.isLoopbackAddress }
+    private fun getWifiAddress(context: Context): String {
+        val manager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val ip = manager.connectionInfo.ipAddress
+        return if (ip == 0) "" else "%d.%d.%d.%d".format(
+            ip and 0xFF, ip shr 8 and 0xFF, ip shr 16 and 0xFF, ip shr 24 and 0xFF
+        )
+    }
+
+    private fun getHostAddress(keyword: String): String {
+        return NetworkInterface.getNetworkInterfaces().toList()
+            .filter { keyword.isEmpty() || it.name.startsWith(keyword) }
+            .flatMap { it.inetAddresses.toList() }
+            .firstOrNull { it is Inet4Address && !it.isLoopbackAddress }
             ?.hostAddress.orEmpty()
+    }
 
     /**
      * need permission 'Manifest.permission.ACCESS_FINE_LOCATION' and 'Manifest.permission.ACCESS_WIFI_STATE' if system sdk >= Android O.
@@ -85,7 +91,7 @@ object Utils {
         }
     }
 
-    fun getHttpBaseUrl(context: Context, port: Int = 9091) = "http://${getIpAddress(context)}:$port/"
+    fun getHttpBaseUrl(context: Context, port: Int = 9091) = "http://${getIp(context)}:$port/"
 
     // ------------------------------------------------------------------------------------------------------------------------
     // ---- Others
